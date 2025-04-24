@@ -25,9 +25,15 @@ function App() {
 
   const copyToClipboard = () => {
     passwordRef.current.select();
-    window.navigator.clipboard.writeText(passwordRef.current.value); 
-    alert("Password copied to clipboard");
-  }
+    window.navigator.clipboard
+      .writeText(passwordRef.current.value)
+      .then(() => {
+        alert("Password copied to clipboard!");
+      })
+      .catch(() => {
+        alert("Failed to copy password to clipboard");
+      });
+  };
 
   // Alternative approach using useEffect
   // This approach will generate a new password every time the component mounts or any of the dependencies change
@@ -58,7 +64,10 @@ function App() {
             ref={passwordRef}
             className="bg-amber-50 rounded-full px-4 py-4 text-2xl"
           />
-          <button className="bg-blue-500 text-2xl rounded-full px-4 py-4 shadow-xl cursor-pointer text-white" onClick={copyToClipboard}>
+          <button
+            className="bg-blue-500 text-2xl rounded-full px-4 py-4 shadow-xl cursor-pointer text-white"
+            onClick={copyToClipboard}
+          >
             Copy
           </button>
         </div>
